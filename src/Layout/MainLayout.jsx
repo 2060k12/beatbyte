@@ -1,14 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
+import Footer from "../components/Footer";
 
 const MainLayout = () => {
   return (
     <div>
       <NavigationBar />
-      <div className="w-92% ml-[8%] mr-[8%] ">
+      <div className="container mx-auto ">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };

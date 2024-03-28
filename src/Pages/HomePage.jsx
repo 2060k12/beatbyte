@@ -6,6 +6,16 @@ import HeroPage from "../components/HeroPage";
 const HomePage = () => {
   return (
     <div>
+      {/* <div className="">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Enter what you want to search"
+          className="px-5 w-full py-4 text-xl mb-10 rounded-2xl border-black border-2
+          "
+        />
+      </div> */}
       <div>
         <HeroPage />
       </div>
@@ -17,17 +27,14 @@ const HomePage = () => {
         <AlbumArtHome />
         <AlbumArtHome />
       </div>
-
       <div className="text-5xl ">
         <h2>News </h2>
         <AlbumArtHome />
       </div>
-
       <div className="text-5xl ">
         <h2>Recommended Artist </h2>
         <AlbumArtHome />
       </div>
-
       <div className="text-5xl ">
         {" "}
         <h2>Recently Viewed </h2>

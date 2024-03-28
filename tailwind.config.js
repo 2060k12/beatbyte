@@ -16,6 +16,11 @@ export default {
       "6xl": "4rem",
       "7xl": "5rem",
     },
+
+    fontFamily: {
+      inter: ["Inter", "sans-serif"],
+    },
+
     extend: {},
   },
   plugins: [],
