@@ -22,6 +22,11 @@ export default {
     },
 
     extend: {},
+
+    daisyui: {
+      darkTheme: "black",
+      themes: ["light", "black"],
+    },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

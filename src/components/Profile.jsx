@@ -20,7 +20,8 @@ const Profile = () => {
           </p>
         </h1>
       </div>
-      <div className="flex flex-row justify-evenly w-[75%]content-center">
+
+      <div className="flex flex-row justify-center gap-20 content-center">
         <h2>Review</h2>
         <h2>favorites </h2>
         <h2>Personal Information </h2>

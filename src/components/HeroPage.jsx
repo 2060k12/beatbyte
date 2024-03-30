@@ -4,7 +4,7 @@ import Image from "../assets/image/album.jpg";
 const HeroPage = () => {
   return (
     <>
-      <div className="flex flex-row justify-start align-tops border-r border-t border-b border-l border-white ">
+      <div className="flex flex-row justify-start align-tops  border-white">
         <img
           src={Image}
           alt="Image of beatles"
