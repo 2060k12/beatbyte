@@ -1,15 +1,12 @@
 import React from "react";
-// import { BsExclamationOctagon } from "react-icons/bs";
+
+import Image from "../assets/image/error.svg";
 
 const NotFoundPage = () => {
   return (
     <div>
       <div>
-        <img
-          src="src/assets/image/error.jpg"
-          className="w-[70vh] m-auto"
-          alt=""
-        />
+        <img src={Image} className="w-[70vh] m-auto" alt="" />
       </div>
     </div>
   );
