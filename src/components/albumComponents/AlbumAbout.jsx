@@ -13,6 +13,31 @@ import {
 import { db } from "../../config/firebase";
 
 const AlbumAbout = () => {
+  const [reviewsList, setReviewsList] = useState([]);
+  let reviews = [];
+
+  //for reviews
+  const reviewsCollectionRef = collectionGroup(db, "reviews");
+  useEffect(() => {
+    const getReviews = async () => {
+      //read the data
+      //set the movie list
+
+      try {
+        const data = await getDocs(reviewsCollectionRef);
+
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setReviewsList(filteredData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getReviews();
+  }, []);
+
   const location = useLocation();
   const albumId = location.state.albumId;
   const [albumsList, setAlbumList] = useState([]);
@@ -202,6 +227,68 @@ const AlbumAbout = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <h1 className="text-3xl font-bold">Reviews</h1>
+
+        <div>
+          {reviewsList.map((items) => (
+            <div key={items.userName}>
+              {items.albumName.trim().toLowerCase() ===
+                soloAlbumDetail.name?.trim().toLowerCase() && (
+                <div className="flex flex-row py-4 ml-4">
+                  <img
+                    src="https://loremflickr.com/200/200"
+                    alt=""
+                    className="h-20 rounded-xl"
+                  />
+
+                  <div className="px-3">
+                    <h1 className=" font-bold text-2xl ">{items.userName}</h1>
+                    <div className="p-0">
+                      <div className="rating">
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400"
+                          checked={parseInt(items.rating) === 1}
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400"
+                          checked={parseInt(items.rating) === 2}
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400"
+                          checked={parseInt(items.rating) === 3}
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400"
+                          checked={parseInt(items.rating) === 4}
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400"
+                          checked={parseInt(items.rating) === 5}
+                        />
+                      </div>
+                    </div>
+                    <p className="text-s">
+                      There will never be something like this.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </>

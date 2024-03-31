@@ -10,12 +10,12 @@ const HomePage = () => {
         <HeroPage />
       </div>
 
-      <div className=" font-bold text-4xl px-5 lg:px-0">
-        <h2 className="text-4xl">Top Pickups </h2>
+      <div className=" ">
+        <h2 className="font-bold text-4xl px-5 lg:px-0">Top Pickups </h2>
         <AlbumArtImg />
       </div>
-      <div className=" font-bold text-4xl px-5 lg:px-0 ">
-        <h2>News </h2>
+      <div className=" ">
+        <h2 className="font-bold text-4xl px-5 lg:px-0">News </h2>
         <AlbumArtImg />
       </div>
       <div>
