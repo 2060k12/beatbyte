@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 
 const Browse = () => {
   // declaring variable for album id and artist id
+  let artistId;
+  let albumId;
 
   // database
 
@@ -82,15 +84,20 @@ const Browse = () => {
         {albumsList.map((eachAlbum) => (
           <div key={eachAlbum.id}>
             <div className=" m-2 ml-0 mr-10 max-w-[200px]  ">
-              <img
-                src={eachAlbum.albumArt}
-                alt="Image "
-                className="h-[200px] rounded-3xl block p-0 m-0"
-              />
+              <Link
+                to={`/album/${eachAlbum.id}`}
+                state={{ albumId: eachAlbum.id }}
+              >
+                <img
+                  src={eachAlbum.albumArt}
+                  alt="Image "
+                  className="h-[200px] rounded-3xl block p-0 m-0"
+                />
 
-              <span className="text-lg pt-1 mt-2 center block text-center leading-7 ">
-                {eachAlbum.name}
-              </span>
+                <span className="text-lg pt-1 mt-2 center block text-center leading-7 ">
+                  {eachAlbum.name}
+                </span>
+              </Link>
             </div>
           </div>
         ))}

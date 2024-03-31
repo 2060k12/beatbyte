@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../config/firebase";
+import { getDocs, collection, collectionGroup } from "firebase/firestore";
 
 const Reviews = () => {
   return (
@@ -73,7 +75,7 @@ const Reviews = () => {
                 />
               </div>
             </div>
-            <p className="text-xs">There will never be something like this.</p>
+            <p className="text-s">There will never be something like this.</p>
           </div>
         </div>
       </div>

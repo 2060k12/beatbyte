@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Image from "../assets/image/background.png";
 import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -10,8 +13,20 @@ const LoginForm = () => {
   const signUp = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      window.location.href = "/";
     } catch (error) {
-      console.error(error);
+      alert(
+        "Error! \nSomething went Wrong,\n Please try Again, \nNote: Password Length must be greater than 9. \n Also check your email address"
+      );
+    }
+  };
+
+  const signIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = "/";
+    } catch (error) {
+      alert("Error! Invalid Credentials");
     }
   };
 
@@ -74,10 +89,11 @@ const LoginForm = () => {
             </button>
 
             <button
-              type="submit"
+              type="button"
+              onClick={signIn}
               className=" bg-transparent border border-2 text-white w-full h-[50px] rounded-lg"
             >
-              Sign in with Google
+              Sign In
             </button>
           </div>
 
