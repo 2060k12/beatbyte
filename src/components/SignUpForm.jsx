@@ -97,7 +97,7 @@ const LoginForm = () => {
             </button>
           </div>
 
-          <div className="w-[328px] h-[400px] bg-cover bg-center bg-[url('src/assets/image/albumsMix.png')] rounded-3xl shadow-white drop-shadow-lg ml-3"></div>
+          <div className="w-[328px] h-[400px] bg-cover bg-center bg-[url('./assets/image/albumsMix.png')] rounded-3xl shadow-white drop-shadow-lg ml-3"></div>
         </div>
       </div>
     </>
