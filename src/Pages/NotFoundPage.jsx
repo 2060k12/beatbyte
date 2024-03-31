@@ -4,8 +4,13 @@ import React from "react";
 const NotFoundPage = () => {
   return (
     <div>
-      {/* <BsExclamationOctagon className=" text-yellow-400" text-6xl mb-4 />! */}
-      Couldn't find the pages
+      <div>
+        <img
+          src="src/assets/image/error.jpg"
+          className="w-[70vh] m-auto"
+          alt=""
+        />
+      </div>
     </div>
   );
 };

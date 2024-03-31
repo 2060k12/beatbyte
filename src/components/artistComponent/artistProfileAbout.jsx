@@ -2,17 +2,20 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Browse from "../BrowseComponents";
 import { Link, useLocation } from "react-router-dom";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 
 const artistProfileAbout = () => {
   const location = useLocation();
   const artistId = location.state.artistId;
-  console.log(artistId);
 
   const artistCollectionRef = collection(db, "artist");
+  const albumCollectionRef = collection(db, `artist/${artistId}/albums`);
   // database
   const [artistList, setArtistList] = useState([]);
+
+  // fetch albums from queen database
+  const [albumsList, setAlbumList] = useState([]);
 
   useEffect(() => {
     const getArtistName = async () => {
@@ -30,13 +33,34 @@ const artistProfileAbout = () => {
           }));
 
         setArtistList(filteredData);
-        console.log(filteredData);
       } catch (error) {
         console.error(error);
       }
     };
     getArtistName();
   }, [artistId]);
+
+  useEffect(() => {
+    const getAlbumName = async () => {
+      //read the data
+      //set the movie list
+
+      try {
+        const data = await getDocs(albumCollectionRef);
+
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log(filteredData);
+
+        setAlbumList(filteredData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAlbumName();
+  }, []);
 
   return (
     <>
@@ -112,25 +136,26 @@ const artistProfileAbout = () => {
                 </div>
                 <div className="collapse-content">
                   {/* // todo:: Set albums */}
-                  <ol>
-                    <li>Queen (1973)</li>
-                    <li>Queen II (1974)</li>
-                    <li>Sheer Heart Attack (1974)</li>
-                    <li>A Night at the Opera (1975)</li>
-                    <li>A Day at the Races (1976)</li>
-                    <li>News of the World (1977)</li>
-                    <li>Jazz (1978)</li>
-                    <li>The Game (1980)</li>
-                    <li>Flash Gordon (1980)</li>
-                    <li>Hot Space (1982)</li>
-                    <li>The Works (1984)</li>
-                    <li>A Kind of Magic (1986)</li>
-                    <li>The Miracle (1989)</li>
-                    <li>Innuendo (1991)</li>
-                    <li>Made in Heaven (1995)</li>
-                  </ol>
+                  <section className="flex flex-row">
+                    {albumsList.map((eachAlbum) => (
+                      <div key={eachAlbum.id}>
+                        <div className=" m-2 ml-0 mr-10 max-w-[200px]  ">
+                          <img
+                            src={eachAlbum.albumArt}
+                            alt="Image "
+                            className="h-[200px] rounded-3xl block p-0 m-0"
+                          />
+
+                          <span className="text-2xl pt-1 mt-2 center block text-center leading-7 ">
+                            {eachAlbum.name}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </section>
                 </div>
               </div>
+
               <div className="collapse collapse-arrow join-item border border-base-300">
                 <input type="radio" name="my-accordion-4" />
                 <div className="collapse-title text-xl font-medium">

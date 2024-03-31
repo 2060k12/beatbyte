@@ -5,4 +5,10 @@
 
 * {
   font-family: Inter, Arial, sans-serif;
+  /* background: #000;
+  color: aliceblue; */
+}
+
+.login_form {
+  background-image: url("src/assets/image/background.png");
 }

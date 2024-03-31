@@ -27,9 +27,10 @@ const router = createBrowserRouter(
       <Route path="*" index element={<NotFoundPage />} />
       <Route path="/profile" index element={<ProfilePage />} />
       <Route path="/check" index element={<DatabaseCheck />} />
-      <Route path="/album" index element={<AlbumProfilePage />} />
+      {/* <Route path="/album" index element={<AlbumProfilePage />} /> */}
       <Route path="/browse" index element={<Browse />} />
       <Route path="/artist/:id" index element={<ArtistProfilePage />} />
+      <Route path="/album/:id" index element={<AlbumProfilePage />} />
     </Route>
   )
 );

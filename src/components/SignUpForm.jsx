@@ -17,9 +17,9 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className=" w-[982px] h-[530px] bg-center bg-[url('src/assets/image/background.png')]  rounded-3xl p-6 m-auto">
+      <div className=" login_form w-[982px] h-[530px] bg-center  rounded-3xl p-6 m-auto">
         <div className="flex justify-evenly content-center place-items-center h-full">
-          <form onSubmit={signUp} className="text-xl">
+          <div className="text-xl">
             <div className="mb-4">
               <h3 className="font-thin text-3xl text-white text-opacity-60 leading-11 ">
                 START FOR FREE
@@ -65,19 +65,21 @@ const LoginForm = () => {
               className="bg-white bg-opacity-20 h-[50px]  text-[#d4d4d4] rounded-lg mb-3  w-full block pl-2"
               placeholder="Password"
             />
-            <input
-              type="submit"
-              value="Sign Up"
-              className="mb-4 bg-[#09E85E] text-black font-bold w-full h-[50px] rounded-lg"
-            />
-
-            <input
-              type="submit"
+            <button
+              type="button"
               onClick={signUp}
-              value="Sign in with Google"
+              className="mb-4 bg-[#09E85E] text-black font-bold w-full h-[50px] rounded-lg"
+            >
+              Sign Up{" "}
+            </button>
+
+            <button
+              type="submit"
               className=" bg-transparent border border-2 text-white w-full h-[50px] rounded-lg"
-            />
-          </form>
+            >
+              Sign in with Google
+            </button>
+          </div>
 
           <div className="w-[328px] h-[400px] bg-cover bg-center bg-[url('src/assets/image/albumsMix.png')] rounded-3xl shadow-white drop-shadow-lg ml-3"></div>
         </div>
