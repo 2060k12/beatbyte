@@ -68,7 +68,7 @@ const AlbumArtHome = () => {
       <div className="flex flex-wrap lg:justify-start justify-center lg:p-0 pl-2">
         {randomAlbums.map((eachAlbum) => (
           <div key={eachAlbum.id} className="">
-            <div className=" m-2 ml-0 mr-10 max-w-[180px]  ">
+            <div className=" m-2 ml-0 mr-10 max-w-36 ">
               <Link
                 to={`/album/${eachAlbum.id}`}
                 state={{ albumId: eachAlbum.id }}

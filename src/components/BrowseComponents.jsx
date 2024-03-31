@@ -62,8 +62,8 @@ const Browse = () => {
 
   return (
     <div className="py-6">
-      <h1 className="font-bold text-4xl"> Browse all artists</h1>
-      <div className="flex">
+      <h1 className="font-bold text-4xl px-5 lg:px-0"> Browse all artists</h1>
+      <div className="flex flex flex-wrap lg:justify-start justify-center lg:p-0 ">
         {artistList.map((artist) => (
           <div className="flex-cols justify-center w-40 m-4">
             <Link to={`/artist/${artist.id}`} state={{ artistId: artist.id }}>
@@ -78,12 +78,12 @@ const Browse = () => {
         ))}
       </div>
 
-      <h1 className="font-bold text-4xl"> Browse all artists</h1>
+      <h1 className="font-bold text-4xl px-5 lg:px-0"> Browse all albums</h1>
 
-      <div className="flex">
+      <div className="flex flex flex-wrap lg:justify-start justify-center lg:p-0">
         {albumsList.map((eachAlbum) => (
           <div key={eachAlbum.id}>
-            <div className=" m-2 ml-0 mr-10 max-w-[200px]  ">
+            <div className=" m-2 ml-0 mr-10 max-w-36  ">
               <Link
                 to={`/album/${eachAlbum.id}`}
                 state={{ albumId: eachAlbum.id }}

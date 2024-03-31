@@ -10,20 +10,20 @@ const HomePage = () => {
         <HeroPage />
       </div>
 
-      <div className=" ">
+      <div className=" font-bold text-4xl px-5 lg:px-0">
         <h2 className="text-4xl">Top Pickups </h2>
         <AlbumArtImg />
       </div>
-      <div className="text-4xl ">
+      <div className=" font-bold text-4xl px-5 lg:px-0 ">
         <h2>News </h2>
         <AlbumArtImg />
       </div>
       <div>
-        <h2 className="text-4xl">Recommended Artist </h2>
+        <h2 className="font-bold text-4xl px-5 lg:px-0">Recommended Artist </h2>
         <ArtistArtHome />
       </div>
       <div>
-        <h2 className="text-4xl ">Recently Viewed -Not Started woking yet </h2>
+        <h2 className="font-bold text-4xl px-5 lg:px-0 ">Recently Viewed</h2>
         <ArtistArtHome />
       </div>
     </div>
