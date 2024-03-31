@@ -99,8 +99,8 @@ const AlbumAbout = () => {
 
   for (let i = 0; i < allAlbumTracks.length; i++) {
     if (
-      allAlbumTracks[i].name.trim().toLowerCase() ==
-      soloAlbumDetail.name.trim().toLowerCase()
+      allAlbumTracks[i]?.name?.trim().toLowerCase() ===
+      soloAlbumDetail?.name?.trim().toLowerCase()
     ) {
       allAlbumTracks = allAlbumTracks[i];
       delete allAlbumTracks.id;
@@ -236,8 +236,8 @@ const AlbumAbout = () => {
         <div>
           {reviewsList.map((items) => (
             <div key={items.userName}>
-              {items.albumName.trim().toLowerCase() ===
-                soloAlbumDetail.name?.trim().toLowerCase() && (
+              {items.albumName?.trim().toLowerCase() ===
+                soloAlbumDetail?.name?.trim().toLowerCase() && (
                 <div className="flex flex-row py-4 ml-4">
                   <img
                     src="https://loremflickr.com/200/200"
