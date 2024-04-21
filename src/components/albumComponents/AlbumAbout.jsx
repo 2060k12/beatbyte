@@ -2,6 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Browse from "../BrowseComponents";
 import { Link, useLocation } from "react-router-dom";
+import AddReviews from "../AddReviews";
+import Image from "../../assets/star-sharp.svg";
+
 import {
   getDocs,
   collection,
@@ -14,10 +17,12 @@ import { db } from "../../config/firebase";
 
 const AlbumAbout = () => {
   const [reviewsList, setReviewsList] = useState([]);
+  var albumName;
   let reviews = [];
 
   //for reviews
   const reviewsCollectionRef = collectionGroup(db, "reviews");
+
   useEffect(() => {
     const getReviews = async () => {
       //read the data
@@ -40,19 +45,17 @@ const AlbumAbout = () => {
 
   const location = useLocation();
   const albumId = location.state.albumId;
+
   const [albumsList, setAlbumList] = useState([]);
-  const [albumsTrackList, setAlbumsTrackList] = useState([]);
 
   const albumCollectionRef = collectionGroup(db, "albums");
-  const albumTrackCollectionRef = collectionGroup(db, "albumTrack");
 
   const artistCollectionRef = collectionGroup(db, "reviews");
-  //reviews
 
   useEffect(() => {
     const getAlbumCollection = async () => {
       //read the data
-      //set the movie list
+      //set the album list
 
       try {
         const data = await getDocs(albumCollectionRef);
@@ -67,115 +70,145 @@ const AlbumAbout = () => {
       }
     };
 
-    const getAlbumTrackCollection = async () => {
+    const getArtistCollection = async () => {
       //read the data
-      //set the movie list
+      //set the album list
 
       try {
-        const data = await getDocs(albumTrackCollectionRef);
+        const data = await getDocs(artistCollectionRef);
 
         const filteredData = data.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        setAlbumsTrackList(filteredData);
+        setAlbumList(filteredData);
       } catch (err) {
         console.error(err);
       }
     };
 
     getAlbumCollection();
-    getAlbumTrackCollection();
+    getArtistCollection();
   }, []);
 
   let soloAlbumDetail = [...albumsList];
-  let allAlbumTracks = [...albumsTrackList];
 
   for (let i = 0; i < soloAlbumDetail.length; i++) {
     if (soloAlbumDetail[i].id == albumId) {
       soloAlbumDetail = soloAlbumDetail[i];
     }
   }
+  const [showPopup, setShowPopup] = useState(false);
 
-  for (let i = 0; i < allAlbumTracks.length; i++) {
-    if (
-      allAlbumTracks[i]?.name?.trim().toLowerCase() ===
-      soloAlbumDetail?.name?.trim().toLowerCase()
-    ) {
-      allAlbumTracks = allAlbumTracks[i];
-      delete allAlbumTracks.id;
-    }
-  }
-
+  const handlePressButton = () => {
+    setShowPopup(true);
+  };
   return (
     <>
       <div className="mb-5">
-        <div className="hero ">
-          <div className="hero-content flex-col lg:flex-row   ">
-            <img
-              src={soloAlbumDetail.albumArt}
-              className="max-w-sm rounded-lg shadow-2xl w-60"
-            />
+        <div className=" ">
+          <div className="   ">
+            <h1 className="text-5xl font-bold">
+              {soloAlbumDetail.name} <ion-icon name="star"></ion-icon>
+            </h1>
+            <h1 className="text-4xl font-normal underline">Queen</h1>
+            <h2 className="font-extralight text-xl">
+              {" "}
+              {soloAlbumDetail.genre}
+            </h2>
+            <div className="flex flex-row  justify-between">
+              <div className="flex flex-row space-x-16 h-[300px] mb-20">
+                <img
+                  src={soloAlbumDetail.albumArt}
+                  className="max-w-sm rounded-3xl shadow-2xl w-[300px] h-[300px] object-cover"
+                />
+                <div>
+                  <h1 className="text-3xl font-bold ">Stream or Buy</h1>
+                  <p className="flex px-0 mt-2">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png"
+                      width={40}
+                      height={40}
+                      alt=""
+                      className="mr-4"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/361px-Apple_Music_icon.svg.png"
+                      width={40}
+                      height={40}
+                      alt=""
+                      className="mr-4"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Amazon_Music_logo.svg/89px-Amazon_Music_logo.svg.png?20211224163912"
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
+                  </p>
 
-            <div>
-              {/* <div className="rating">
-              <input
-                type="radio"
-                name="rating-4"
-                className="mask mask-star-2 bg-green-500"
-              />
-              <input
-                type="radio"
-                name="rating-4"
-                className="mask mask-star-2 bg-green-500"
-                checked
-              />
-              <input
-                type="radio"
-                name="rating-4"
-                className="mask mask-star-2 bg-green-500"
-              />
-              <input
-                type="radio"
-                name="rating-4"
-                className="mask mask-star-2 bg-green-500"
-              />
-              <input
-                type="radio"
-                name="rating-4"
-                className="mask mask-star-2 bg-green-500"
-              />
-            </div> */}
-              <h1 className="text-4xl font-bold">{soloAlbumDetail.name}</h1>
-              <h1 className="text-2xl ">Stream or Buy</h1>
-              <p className="flex px-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png"
-                  width={45}
-                  alt=""
-                  className="mr-4"
-                />
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/361px-Apple_Music_icon.svg.png"
-                  width={40}
-                  alt=""
-                  className="mr-4"
-                />
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Amazon_Music_logo.svg/89px-Amazon_Music_logo.svg.png?20211224163912"
-                  width={50}
-                  alt=""
-                />
-              </p>
-              <p className="py-3">
-                Released : {soloAlbumDetail.released}
-                <br />
-                Studio: {soloAlbumDetail.studio}
-                <br />
-                Length: {soloAlbumDetail.length}
-                <br />
-                Label: {soloAlbumDetail.label}
-              </p>
+                  <p className="py-3 w-[450px]">
+                    <div className="flex flex-row  space-x-[20px] ">
+                      <h className="font-bold text-2xl inline mr-5">
+                        Released:{" "}
+                      </h>
+                      <h className="text-2xl font-thin inline">
+                        {soloAlbumDetail.released}
+                      </h>
+                    </div>
+                    <div className="flex flex-row space-x-[50px] ">
+                      <h className="font-bold text-2xl inline mr-5">Studio: </h>
+                      <h className="text-2xl font-thin inline">
+                        {soloAlbumDetail.studio}
+                      </h>
+                    </div>
+                    <div className="flex flex-row  space-x-[45px] ">
+                      <h className="font-bold text-2xl inline mr-5">Length: </h>
+                      <h className="text-2xl font-thin inline">
+                        {soloAlbumDetail.length}
+                      </h>
+                    </div>
+
+                    <div className="flex flex-row  space-x-[63px] ">
+                      <h className="font-bold text-2xl inline mr-5">Label: </h>
+                      <h className="text-2xl font-thin inline">
+                        {soloAlbumDetail.label}
+                      </h>
+                    </div>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col h-[300px]">
+                {showPopup && (
+                  <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-70 flex justify-center items-center">
+                    <AddReviews
+                      albumId={albumId}
+                      thisAlbumName={soloAlbumDetail.name}
+                    />
+
+                    <button
+                      className="text-xl font-bold  bg-red-600 hover:bg-red-700 text-white px-4 rounded-l rounded-lg h-[290px]"
+                      onClick={() => setShowPopup(false)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col h-[300px]">
+                <button className="text-2xl font-bold">Press</button>
+                <button
+                  onClick={handlePressButton}
+                  className="bg-[#2F2E2E]  h-[260px] w-16 flex flex-col  justify-center"
+                >
+                  <img src={Image} alt="" className="bg-transparent w-1" />
+
+                  <span className="text-xl pl-4 writing-mode-vertical bg-transparent font-bold">
+                    Leave Your Review
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -195,20 +228,16 @@ const AlbumAbout = () => {
                 <h1 className="text-3xl font-bold mt-3">Track</h1>
               </div>
               <div className="collapse-content">
-                <div>
-                  <ol>
-                    {Object.values(allAlbumTracks).map((element, index) => (
-                      <li key={index}>{element}</li>
-                    ))}
-                  </ol>
-                </div>
+                {soloAlbumDetail?.tracks?.map((track, index) => (
+                  <li key={index}>{track}</li>
+                ))}
               </div>
             </div>
             <div className="collapse collapse-arrow join-item border border-base-300">
               <input type="radio" name="my-accordion-4" />
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-3xl font-bold mt-3">
-                  More Albums from Queen
+                  More Albums from {soloAlbumDetail.name}
                 </h1>{" "}
               </div>
               <div className="collapse-content">
@@ -281,9 +310,7 @@ const AlbumAbout = () => {
                         />
                       </div>
                     </div>
-                    <p className="text-s">
-                      There will never be something like this.
-                    </p>
+                    <p className="text-s">{items.comment}</p>
                   </div>
                 </div>
               )}

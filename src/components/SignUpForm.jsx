@@ -13,6 +13,10 @@ const LoginForm = () => {
   const signUp = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      {
+        auth.currentUser.photoURL =
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzeDq4l90PXPsdXQKjFX5_Azg0jtSrDiyAbLyDnRziRw&s";
+      }
       window.location.href = "/";
     } catch (error) {
       alert(

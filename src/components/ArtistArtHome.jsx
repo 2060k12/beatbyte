@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection, collectionGroup } from "firebase/firestore";
-import { auth, db } from "../config/firebase";
+import { db } from "../config/firebase";
 import { Link } from "react-router-dom";
 
 const AlbumArtHome = () => {
@@ -32,14 +32,16 @@ const AlbumArtHome = () => {
     <>
       <div className="flex flex-wrap lg:justify-start justify-center">
         {artistList.map((artist) => (
-          <div className="flex-cols justify-center w-40 m-4">
+          <div className="flex-cols justify-center w-[200px] m-4">
             <Link to={`/artist/${artist.id}`} state={{ artistId: artist.id }}>
               <img
-                className="w-40 h-40 rounded-full "
+                className="w-[200px] h-[200px] rounded-full object-cover  "
                 src={artist.profileImage}
                 alt=""
               />
-              <h1 className="text-center w-full">{artist.name}</h1>
+              <h1 className="text-center font-light text-[25px] w-full">
+                {artist.name}
+              </h1>
             </Link>
           </div>
         ))}

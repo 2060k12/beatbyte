@@ -15,23 +15,44 @@ const NavigationBar = () => {
     return unsubscribe; // Cleanup the listener when the component unmounts
   }, []);
 
-  const profileImage = "https://avatars.githubusercontent.com/u/84684716?v=4";
-
   return (
-    <div className="container mx-auto">
-      <div className="font-bold text-lg flex flex-col lg:flex-row justify-between items-center py-4 lg:py-12 ">
-        <span className="text-[#09E85E] text-5xl lg:text-center lg:inline-block text-start">
-          BeatByte
-        </span>
-        <div className="text-xl lg:text-3xl lg:ml-auto lg:flex lg:items-center flex flex-row justify-around gap-5 lg:gap-8 mt-4 lg:mt-0">
-          <Link to="/">Home</Link>
-          <Link to="/browse">Browse</Link>
-          <Link to="/news">News</Link>
-          <Link to="/search">Search</Link>
+    <div className="container mx-auto py-6 pb-10">
+      <nav className="p-5shadow md:flex md:items-center md:justify-between">
+        <div className="flex justify-between items-center">
+          <span className="text-[#09E85E] font-bold  text-4xl lg:text-5xl ">
+            BeatByte
+          </span>
+
+          <span class="text-3xl cursor-pointer mx-2 md:hidden block">
+            <ion-icon
+              name="menu"
+              onClick={(e) => {
+                e.name === "menu"
+                  ? e.target.setAttribute("name", "close")
+                  : e.target.setAttribute("name", "menu");
+              }}
+            ></ion-icon>
+          </span>
+        </div>
+        <ul className="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500 ">
+          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
+            <Link to="/browse">Browse</Link>
+          </li>
+          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
+            <Link to="/news">News</Link>
+          </li>
+          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
+            <Link to="/search">Search</Link>
+          </li>
           {!isLoggedIn ? (
-            <Link to="/login" className="text-[#09E85E]">
-              Login
-            </Link>
+            <li className="mx-4 text-2xl my-6 md:my-0">
+              <Link to="/login" className="text-[#09E85E]">
+                Login
+              </Link>
+            </li>
           ) : (
             <div className=" dropdown dropdown-end">
               <div
@@ -40,7 +61,13 @@ const NavigationBar = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full">
-                  <img alt="image" src={profileImage} />
+                  <img
+                    alt="image"
+                    src={
+                      auth.currentUser.photoURL ||
+                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    }
+                  />
                 </div>
               </div>
               <ul
@@ -71,11 +98,17 @@ const NavigationBar = () => {
                     Logout
                   </button>
                 </li>
+
+                <li>
+                  <Link to="/admin" className="justify-between">
+                    <button>Admin Panel</button>
+                  </Link>
+                </li>
               </ul>
             </div>
           )}
-        </div>
-      </div>
+        </ul>
+      </nav>
     </div>
   );
 };

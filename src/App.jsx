@@ -17,6 +17,7 @@ import DatabaseCheck from "./Pages/DatabaseCheck";
 import AlbumProfilePage from "./Pages/AlbumProfilePage";
 import ArtistProfilePage from "./Pages/ArtistProfilePage";
 import Browse from "./Pages/Browse";
+import Admin from "./Pages/Admin";
 ProfilePage;
 
 const router = createBrowserRouter(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="/browse" index element={<Browse />} />
       <Route path="/artist/:id" index element={<ArtistProfilePage />} />
       <Route path="/album/:id" index element={<AlbumProfilePage />} />
+      <Route path="/admin" index element={<Admin />} />
     </Route>
   )
 );

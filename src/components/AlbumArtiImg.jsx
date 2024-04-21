@@ -61,14 +61,14 @@ const AlbumArtHome = () => {
   }
 
   const shuffledAlbums = shuffleArray(albumsList);
-  const randomAlbums = shuffledAlbums.slice(0, 6);
+  const randomAlbums = shuffledAlbums.slice(0, 5);
 
   return (
     <>
       <div className="flex flex-wrap lg:justify-start justify-center lg:p-0 pl-2">
         {randomAlbums.map((eachAlbum) => (
           <div key={eachAlbum.id} className="">
-            <div className=" m-2 ml-0 mr-10 max-w-36 ">
+            <div className=" m-2 ml-0 mr-10 max-w-[200px]">
               <Link
                 to={`/album/${eachAlbum.id}`}
                 state={{ albumId: eachAlbum.id }}
@@ -76,10 +76,10 @@ const AlbumArtHome = () => {
                 <img
                   src={eachAlbum.albumArt}
                   alt="Image "
-                  className="h-[200px] rounded-3xl block p-0 m-0"
+                  className="h-[150px] md:h-[200px] rounded-3xl block p-0 m-0 object-cover  "
                 />
 
-                <span className="text-lg pt-1 mt-2 center block text-center leading-7 ">
+                <span className="text-[25px] pt-1 mt-2 center block text-center leading-8 font-light">
                   {eachAlbum.name}
                 </span>
               </Link>

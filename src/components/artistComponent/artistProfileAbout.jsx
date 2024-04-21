@@ -52,7 +52,6 @@ const artistProfileAbout = () => {
           ...doc.data(),
           id: doc.id,
         }));
-        console.log(filteredData);
 
         setAlbumList(filteredData);
       } catch (error) {
@@ -64,7 +63,7 @@ const artistProfileAbout = () => {
 
   return (
     <>
-      <div>
+      <div className="w-full">
         {artistList.map((artist) => (
           <>
             <div className="hero ">

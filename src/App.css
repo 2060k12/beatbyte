@@ -1,0 +1,3 @@
+.writing-mode-vertical {
+  writing-mode: vertical-rl; /* 'rl' means top to bottom */
+}

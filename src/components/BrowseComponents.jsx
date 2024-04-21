@@ -65,7 +65,7 @@ const Browse = () => {
       <h1 className="font-bold text-4xl px-5 lg:px-0"> Browse all artists</h1>
       <div className="flex flex flex-wrap lg:justify-start justify-center lg:p-0 ">
         {artistList.map((artist) => (
-          <div className="flex-cols justify-center w-40 m-4">
+          <div key={artist.id} className="flex-cols justify-center w-40 m-4">
             <Link to={`/artist/${artist.id}`} state={{ artistId: artist.id }}>
               <img
                 className="w-40 h-40 rounded-full "
