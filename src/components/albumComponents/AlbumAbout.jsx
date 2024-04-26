@@ -4,6 +4,7 @@ import Browse from "../BrowseComponents";
 import { Link, useLocation } from "react-router-dom";
 import AddReviews from "../AddReviews";
 import Image from "../../assets/star-sharp.svg";
+import { addDoc, setDoc } from "firebase/firestore";
 
 import {
   getDocs,
@@ -13,7 +14,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 
 const AlbumAbout = () => {
   const [reviewsList, setReviewsList] = useState([]);
@@ -22,6 +23,7 @@ const AlbumAbout = () => {
 
   //for reviews
   const reviewsCollectionRef = collectionGroup(db, "reviews");
+  // favourites  const [addFavourites, setAddFavourites] = useState([]);
 
   useEffect(() => {
     const getReviews = async () => {
@@ -227,9 +229,29 @@ const AlbumAbout = () => {
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-3xl font-bold mt-3">Track</h1>
               </div>
-              <div className="collapse-content">
+              <div className="collapse-content text-2xl ">
                 {soloAlbumDetail?.tracks?.map((track, index) => (
-                  <li key={index}>{track}</li>
+                  <li key={index} className="flex flex-row ">
+                    <div className="w-2/3">{track}</div>
+                    <button
+                      className="flex justify-end"
+                      onClick={async () => {
+                        await addDoc(
+                          collection(
+                            db,
+                            "users",
+                            auth.currentUser.uid,
+                            "favourites"
+                          ),
+                          {
+                            track: track,
+                          }
+                        );
+                      }}
+                    >
+                      <ion-icon name="heart-outline"></ion-icon>{" "}
+                    </button>
+                  </li>
                 ))}
               </div>
             </div>
