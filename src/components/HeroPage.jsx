@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getDocs, collection, collectionGroup } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 import Image from "../assets/image/album.jpg";
 import { auth, db } from "../config/firebase";
@@ -38,41 +40,65 @@ const HeroPage = () => {
 
   const shuffledAlbums = shuffleArray(albumsList);
   const randomAlbums = shuffledAlbums.slice(0, 5);
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
 
   return (
     <>
-      <div className="lg:p-0 p-4 flex flex-col md:flex-row justify-center items-center md:justify-start border-white">
-        {randomAlbums.map((eachAlbum) => (
-          <div key={eachAlbum.id} className=""></div>
-        ))}
-        <img
-          src={Image}
-          alt="Image of beatles"
-          className="rounded-3xl md:mr-8 mb-8 md:mb-0"
-          style={{ maxWidth: "700px", width: "100%" }}
-        />
+      <div>
+        <div>
+          <Carousel responsive={responsive}>
+            {randomAlbums.map((eachAlbum) => (
+              <div key={eachAlbum.id}>
+                <div className="lg:p-0 p-4 flex flex-col md:flex-row justify-center items-center md:justify-start ">
+                  <img
+                    src={eachAlbum.albumArt}
+                    alt="Image of beatles"
+                    className="rounded-3xl md:mr-8 mb-8 md:mb-0 object-cover "
+                    style={{
+                      maxHeight: "400px",
+                      maxWidth: "700px",
+                      width: "100%",
+                    }}
+                  />
+                  <div className="col-span-2  min-w-1/2">
+                    <h1 className="text-4xl md:text-6xl font-bold">
+                      {eachAlbum.name}
+                    </h1>
+                    <h3 className="text-xl md:text-2xl font-bold">
+                      {eachAlbum.name}, {eachAlbum.recorded}
+                    </h3>
+                    <p className="text-lg md:text-xl">
+                      {eachAlbum.about && eachAlbum.about.length > 100
+                        ? eachAlbum.about.substring(0, 100) + "..."
+                        : eachAlbum.about}
+                    </p>
 
-        <div className="col-span-2">
-          <h1 className="text-4xl md:text-6xl font-bold">Abbey Road</h1>
-          <h3 className="text-xl md:text-2xl font-bold">
-            The Beatles, 26th September 1969
-          </h3>
-          <p className="text-lg md:text-xl">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, sequi
-            possimus nam hic, consequatur nesciunt non in alias facilis ea.
-          </p>
-
-          <button className="px-3 py-1 bg-[#09E85E] text-black font-bold rounded-md text-lg md:text-2xl mt-5">
-            More Info
-          </button>
-          <div className="mt-2 py-2 lg:py-0 lg:mt-10 ">
-            <div className="join grid grid-cols-2">
-              <button className="join-item btn btn-outline">
-                Previous page
-              </button>
-              <button className="join-item btn btn-outline">Next</button>
-            </div>
-          </div>
+                    <Link
+                      to={`/album/${eachAlbum.id}`}
+                      state={{ albumId: eachAlbum.id }}
+                    >
+                      <button className="bg-green-600 text-2xl py-2 px-4 rounded-xl mt-5 font-bold ">
+                        Load More
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Carousel>
         </div>
       </div>
     </>

@@ -233,28 +233,6 @@ const AlbumAbout = () => {
                 ))}
               </div>
             </div>
-            <div className="collapse collapse-arrow join-item border border-base-300">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">
-                <h1 className="text-3xl font-bold mt-3">
-                  More Albums from {soloAlbumDetail.name}
-                </h1>{" "}
-              </div>
-              <div className="collapse-content">
-                <p>
-                  <ol>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                    <li>We Will Rock You </li>
-                  </ol>
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

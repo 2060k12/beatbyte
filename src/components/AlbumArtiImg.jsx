@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection, collectionGroup } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { Link } from "react-router-dom";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const AlbumArtHome = () => {
   const artistCollectionRef = collection(db, "artist");
@@ -61,11 +63,26 @@ const AlbumArtHome = () => {
   }
 
   const shuffledAlbums = shuffleArray(albumsList);
-  const randomAlbums = shuffledAlbums.slice(0, 5);
+  const randomAlbums = shuffledAlbums.slice(0, 10);
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 2,
+    },
+  };
 
   return (
     <>
-      <div className="flex flex-wrap lg:justify-start justify-center lg:p-0 pl-2">
+      <Carousel responsive={responsive}>
         {randomAlbums.map((eachAlbum) => (
           <div key={eachAlbum.id} className="">
             <div className=" m-2 ml-0 mr-10 max-w-[200px]">
@@ -86,7 +103,7 @@ const AlbumArtHome = () => {
             </div>
           </div>
         ))}
-      </div>
+      </Carousel>
     </>
   );
 };

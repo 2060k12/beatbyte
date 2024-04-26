@@ -41,12 +41,7 @@ const NavigationBar = () => {
           <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
             <Link to="/browse">Browse</Link>
           </li>
-          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
-            <Link to="/news">News</Link>
-          </li>
-          <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
-            <Link to="/search">Search</Link>
-          </li>
+
           {!isLoggedIn ? (
             <li className="mx-4 text-2xl my-6 md:my-0">
               <Link to="/login" className="text-[#09E85E]">
