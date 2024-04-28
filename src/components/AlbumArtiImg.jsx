@@ -4,8 +4,10 @@ import { auth, db } from "../config/firebase";
 import { Link } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { set } from "firebase/database";
 
 const AlbumArtHome = () => {
+  const [loading, setLoading] = useState(false);
   const artistCollectionRef = collection(db, "artist");
   const albumCollectionRef = collectionGroup(db, "albums");
   const [artistList, setArtistList] = useState([]);
@@ -59,6 +61,7 @@ const AlbumArtHome = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [albumsList[i], albumsList[j]] = [albumsList[j], albumsList[i]];
     }
+
     return albumsList;
   }
 
@@ -90,6 +93,17 @@ const AlbumArtHome = () => {
                 to={`/album/${eachAlbum.id}`}
                 state={{ albumId: eachAlbum.id }}
               >
+                {loading && (
+                  <div>
+                    <div className="flex flex-col gap-4 w-52">
+                      <div className="skeleton h-32 w-full"></div>
+                      <div className="skeleton h-4 w-28"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                    </div>
+                  </div>
+                )}
+
                 <img
                   src={eachAlbum.albumArt}
                   alt="Image "

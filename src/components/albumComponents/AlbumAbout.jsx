@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import Browse from "../BrowseComponents";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import AddReviews from "../AddReviews";
 import Image from "../../assets/star-sharp.svg";
-import { addDoc, setDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, setDoc } from "firebase/firestore";
 
 import {
   getDocs,
@@ -17,6 +17,73 @@ import {
 import { auth, db } from "../../config/firebase";
 
 const AlbumAbout = () => {
+  const albumId = useParams().id;
+  console.log(albumId);
+
+  const [favoriteTracks, setFavoriteTracks] = useState([]);
+  const [favList, setFavList] = useState([]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      const favCollectionRef = collection(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "favorites"
+      );
+    }
+    const getFav = async () => {
+      try {
+        const data = await getDocs(favCollectionRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setFavList(filteredData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getFav();
+  }, [auth.currentUser]);
+
+  const addTrackToFavorites = async (track) => {
+    // Check if the track is already in favorites
+    if (!favoriteTracks.includes(track)) {
+      // If not, add it to favorites
+      await addDoc(collection(db, "users", auth.currentUser.uid, "favorites"), {
+        track: track,
+      });
+      // Update favoriteTracks state to include the new track
+      setFavoriteTracks([...favoriteTracks, track]);
+    }
+  };
+
+  const removeTrackFromFavorites = async (track) => {
+    // Remove track from favorites array
+    const updatedFavorites = favoriteTracks.filter(
+      (favTrack) => favTrack !== track
+    );
+    setFavoriteTracks(updatedFavorites);
+    // Delete the document from Firestore
+    await deleteDoc(doc(db, "users", auth.currentUser.uid, "favorites", track));
+  };
+
+  const isTrackFavorite = (track) => {
+    // Check if the track is in the favoriteTracks array
+    return favoriteTracks.includes(track);
+  };
+
+  const toggleTrackFavorite = (track) => {
+    if (isTrackFavorite(track)) {
+      // Remove track from favorites if it's already favorited
+      removeTrackFromFavorites(track);
+    } else {
+      // Add track to favorites if it's not favorited
+      addTrackToFavorites(track);
+    }
+  };
+
   const [reviewsList, setReviewsList] = useState([]);
   var albumName;
   let reviews = [];
@@ -44,9 +111,6 @@ const AlbumAbout = () => {
     };
     getReviews();
   }, []);
-
-  const location = useLocation();
-  const albumId = location.state.albumId;
 
   const [albumsList, setAlbumList] = useState([]);
 
@@ -229,27 +293,19 @@ const AlbumAbout = () => {
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-3xl font-bold mt-3">Track</h1>
               </div>
-              <div className="collapse-content text-2xl ">
+              <div className="collapse-content text-2xl">
                 {soloAlbumDetail?.tracks?.map((track, index) => (
-                  <li key={index} className="flex flex-row ">
+                  <li key={index} className="flex flex-row">
                     <div className="w-2/3">{track}</div>
                     <button
                       className="flex justify-end"
-                      onClick={async () => {
-                        await addDoc(
-                          collection(
-                            db,
-                            "users",
-                            auth.currentUser.uid,
-                            "favourites"
-                          ),
-                          {
-                            track: track,
-                          }
-                        );
-                      }}
+                      onClick={() => toggleTrackFavorite(track)}
                     >
-                      <ion-icon name="heart-outline"></ion-icon>{" "}
+                      {isTrackFavorite(track) ? (
+                        <ion-icon name="heart"></ion-icon>
+                      ) : (
+                        <ion-icon name="heart-outline"></ion-icon>
+                      )}
                     </button>
                   </li>
                 ))}
@@ -277,38 +333,24 @@ const AlbumAbout = () => {
                   <div className="px-3">
                     <h1 className=" font-bold text-2xl ">{items.userName}</h1>
                     <div className="p-0">
-                      <div className="rating">
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                          checked={parseInt(items.rating) === 1}
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                          checked={parseInt(items.rating) === 2}
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                          checked={parseInt(items.rating) === 3}
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                          checked={parseInt(items.rating) === 4}
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                          checked={parseInt(items.rating) === 5}
-                        />
-                      </div>
+                      {[...Array(5)].map((_, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                          <button
+                            key={ratingValue}
+                            onClick={() => {
+                              setRating(ratingValue);
+                            }}
+                            className={`text-xl focus:outline-none ${
+                              ratingValue <= items.rating
+                                ? "text-yellow-400"
+                                : "text-gray-400"
+                            }`}
+                          >
+                            ★
+                          </button>
+                        );
+                      })}
                     </div>
                     <p className="text-s">{items.comment}</p>
                   </div>

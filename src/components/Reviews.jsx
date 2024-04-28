@@ -50,7 +50,8 @@ const Reviews = () => {
 
   return (
     <>
-      <div>
+      <div className="text-2xl border-2 border-white my-10 px-5 py-10">
+        <div>{reviewsList.length === 0 && <div> No Reviews yet </div>}</div>
         {reviewsList.map((items) => (
           <div key={items.userEmail}>
             {items.userEmail == auth.currentUser.email && (
@@ -64,7 +65,7 @@ const Reviews = () => {
                       <img
                         src={newItems.albumArt}
                         alt=""
-                        className="h-20 rounded-xl"
+                        className="h-28 rounded-xl w-28"
                       />
                     )}
                   </div>
@@ -75,38 +76,21 @@ const Reviews = () => {
                 <div className="px-3">
                   <h1 className=" font-bold text-2xl ">{items.albumName}</h1>
                   <div className="p-0">
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400"
-                        checked={parseInt(items.rating) === 1}
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400"
-                        checked={parseInt(items.rating) === 2}
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400"
-                        checked={parseInt(items.rating) === 3}
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400"
-                        checked={parseInt(items.rating) === 4}
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400"
-                        checked={parseInt(items.rating) === 5}
-                      />
-                    </div>
+                    {[...Array(5)].map((_, index) => {
+                      const ratingValue = index + 1;
+                      return (
+                        <button
+                          key={ratingValue}
+                          className={`text-xl focus:outline-none ${
+                            ratingValue <= items.rating
+                              ? "text-yellow-400"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          ★
+                        </button>
+                      );
+                    })}
                   </div>
                   <p className="text-s">{items.comment}</p>
                 </div>

@@ -4,10 +4,12 @@ import Browse from "../BrowseComponents";
 import { Link, useLocation } from "react-router-dom";
 import { getDocs, collection, doc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
+import { useParams } from "react-router-dom";
 
 const artistProfileAbout = () => {
-  const location = useLocation();
-  const artistId = location.state.artistId;
+  const artistId = useParams().id;
+
+  console.log(artistId);
 
   const artistCollectionRef = collection(db, "artist");
   const albumCollectionRef = collection(db, `artist/${artistId}/albums`);

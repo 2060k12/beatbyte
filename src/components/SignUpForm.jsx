@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "../assets/image/background.png";
 import { auth } from "../config/firebase";
+import { ThreeDots } from "react-loader-spinner";
+
 import {
   createUserWithEmailAndPassword,
+  getAuth,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false); // State to control loading spinner
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const signUp = async () => {
+    setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       {
@@ -19,6 +26,8 @@ const LoginForm = () => {
       }
       window.location.href = "/";
     } catch (error) {
+      setLoading(false);
+
       alert(
         "Error! \nSomething went Wrong,\n Please try Again, \nNote: Password Length must be greater than 9. \n Also check your email address"
       );
@@ -26,10 +35,12 @@ const LoginForm = () => {
   };
 
   const signIn = async () => {
+    setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       window.location.href = "/";
     } catch (error) {
+      setLoading(false);
       alert("Error! Invalid Credentials");
     }
   };
@@ -47,32 +58,42 @@ const LoginForm = () => {
                 Create new account
               </h1>
               <h3 className="font-normal text-3xl text-white text-opacity-60 leading-11 ">
-                Already a member?{" "}
-                <span className="text-[#09E85E]"> Log In</span>
+                Forgot Password?
+                <span
+                  className="text-[#09E85E] cursor-pointer hover:text-green-200 ml-2 hover:border-b-2 "
+                  onClick={(e) => {
+                    const auth = getAuth();
+
+                    if (email.trim() === "") {
+                      alert("Please enter an email address");
+                      return;
+                    }
+                    sendPasswordResetEmail(auth, email)
+                      .then(() => {
+                        alert("Password reset email sent!");
+                      })
+                      .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert(
+                          "Error sending password reset email:",
+                          errorMessage
+                        );
+                        // ..
+                      });
+                  }}
+                >
+                  Reset Now
+                </span>
               </h3>
             </div>
-            {/* <input
-              type="text"
-              name="firstName"
-              id="fistName"
-              className="bg-white bg-opacity-20  text-[#d4d4d4] rounded-lg mb-3 mr-3 px-3 h-[50px] w-[250px]"
-              placeholder="First Name"
-            />
-
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              className="bg-white bg-opacity-20 h-[50px]  text-[#d4d4d4] rounded-lg mb-3 ml-[15px] pl-2 w-[250px]"
-              placeholder="Last Name"
-            /> */}
             <input
               type="email"
               name="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-white bg-opacity-20 h-[50px]  text-[#000] rounded-lg mb-3 w-full block pl-2"
+              className="bg-white bg-opacity-20 h-[50px]  text-[#000] rounded-lg mb-3 w-full block pl-2 hover:bg-white hover:text-black hover:border-transparent"
               placeholder="Email"
             />
             <input
@@ -81,24 +102,30 @@ const LoginForm = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-white bg-opacity-20 h-[50px]  text-[#d4d4d4] rounded-lg mb-3  w-full block pl-2"
+              className="bg-white bg-opacity-20 h-[50px]  text-[#d4d4d4] rounded-lg mb-3  w-full block pl-2 hover:bg-white hover:text-black hover:border-transparent"
               placeholder="Password"
             />
             <button
               type="button"
+              onClick={signIn}
+              className=" bg-[#09E85E] font-bold text-black w-full h-[50px] rounded-lg  hover:bg-green-400"
+            >
+              Login
+            </button>
+            <button
+              type="button"
               onClick={signUp}
-              className="mb-4 bg-[#09E85E] text-black font-bold w-full h-[50px] rounded-lg"
+              className=" bg-transparent border border-2 text-white font-bold w-full h-[50px] rounded-lg mt-2 hover:bg-green-400 hover:text-black hover:border-transparent"
             >
               Sign Up{" "}
             </button>
-
-            <button
-              type="button"
-              onClick={signIn}
-              className=" bg-transparent border border-2 text-white w-full h-[50px] rounded-lg"
-            >
-              Sign In
-            </button>
+            {loading && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <ThreeDots className="bg-transparent" />
+              </div>
+            )}{" "}
+            {/* Display loading spinner in the center of the screen when loading state is true */}
+            {/* Display loading spinner when loading state is true */}
           </div>
 
           <div className="w-[328px] h-[400px] bg-cover bg-center bg-[url('./assets/image/albumsMix.png')] rounded-3xl shadow-white drop-shadow-lg ml-3"></div>
