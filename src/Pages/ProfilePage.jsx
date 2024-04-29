@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "../components/Profile";
 import Reviews from "../components/Reviews";
+
 import PersonalInformation from "../components/PersonalInformation";
 
 import Favorite from "../components/Favorite";
 import { set } from "firebase/database";
+import { auth } from "../config/firebase";
 
 const ProfilePage = () => {
   const [showReviews, setShowReviews] = useState(true);

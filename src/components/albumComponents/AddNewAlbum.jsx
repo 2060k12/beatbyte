@@ -213,6 +213,7 @@ const AddNewAlbum = () => {
           onClick={async (e) => {
             e.preventDefault();
             // Add a new document in collection "cities"
+
             await addDoc(collection(db, "artist", selectedArtist, "albums"), {
               name: albumName,
               albumArt: albumArt,
@@ -224,6 +225,8 @@ const AddNewAlbum = () => {
               studio: studio,
               tracks: tracks,
             });
+
+            window.location.reload();
           }}
         >
           Add Album

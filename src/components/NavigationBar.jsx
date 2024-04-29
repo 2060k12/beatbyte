@@ -73,12 +73,10 @@ const NavigationBar = () => {
                 <li>
                   <Link to="/profile" className="justify-between">
                     Profile
-                    <span className="badge">Not complete</span>
+                    <span className="badge">New</span>
                   </Link>
                 </li>
-                <li>
-                  <a>Settings</a>
-                </li>
+
                 <li>
                   <button
                     onClick={async () => {

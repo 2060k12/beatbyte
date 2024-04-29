@@ -325,7 +325,10 @@ const AlbumAbout = () => {
                 soloAlbumDetail?.name?.trim().toLowerCase() && (
                 <div className="flex flex-row py-4 ml-4">
                   <img
-                    src="https://loremflickr.com/200/200"
+                    src={
+                      auth.currentUser.photoURL ||
+                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    }
                     alt=""
                     className="h-20 rounded-xl"
                   />

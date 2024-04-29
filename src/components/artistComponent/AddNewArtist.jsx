@@ -152,6 +152,7 @@ const AddNewArtist = () => {
                 albumArt: "Album art",
                 releaseDate: "Release date",
               });
+              window.location.reload();
             }}
           >
             Add New Artist
