@@ -9,8 +9,6 @@ import { useParams } from "react-router-dom";
 const artistProfileAbout = () => {
   const artistId = useParams().id;
 
-  console.log(artistId);
-
   const artistCollectionRef = collection(db, "artist");
   const albumCollectionRef = collection(db, `artist/${artistId}/albums`);
   // database

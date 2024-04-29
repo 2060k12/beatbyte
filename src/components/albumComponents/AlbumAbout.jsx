@@ -182,62 +182,77 @@ const AlbumAbout = () => {
               {" "}
               {soloAlbumDetail.genre}
             </h2>
-            <div className="flex flex-row  justify-between">
-              <div className="flex flex-row space-x-16 h-[300px] mb-20">
+            <div className="flex flex-col md:flex-row justify-between">
+              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-16 h-[auto] mb-20">
                 <img
                   src={soloAlbumDetail.albumArt}
-                  className="max-w-sm rounded-3xl shadow-2xl w-[300px] h-[300px] object-cover"
+                  className="max-w-sm rounded-3xl shadow-2xl  md:w-[300px] md:h-[300px] object-cover w-[full] h-auto"
+                  alt="Album Art"
                 />
-                <div>
-                  <h1 className="text-3xl font-bold ">Stream or Buy</h1>
-                  <p className="flex px-0 mt-2">
+
+                <button
+                  className="w-full md:hidden border-white border-2 p-4 rounded-xl hover:bg-green-400 hover:text-black text-2xl font-bold hover:border-transparent duration-500"
+                  onClick={handlePressButton}
+                >
+                  Add Review
+                </button>
+                <div className="flex flex-col justify-center">
+                  <h1 className="text-3xl font-bold mb-2">Stream or Buy</h1>
+                  <div className="flex flex-wrap items-center">
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png"
                       width={40}
                       height={40}
-                      alt=""
-                      className="mr-4"
+                      alt="Spotify"
+                      className="mr-4 mb-2"
                     />
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/361px-Apple_Music_icon.svg.png"
                       width={40}
                       height={40}
-                      alt=""
-                      className="mr-4"
+                      alt="Apple Music"
+                      className="mr-4 mb-2"
                     />
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Amazon_Music_logo.svg/89px-Amazon_Music_logo.svg.png?20211224163912"
                       width={40}
                       height={40}
-                      alt=""
+                      alt="Amazon Music"
+                      className="mb-2"
                     />
-                  </p>
+                  </div>
 
-                  <p className="py-3 w-[450px]">
-                    <div className="flex flex-row  space-x-[20px] ">
-                      <h className="font-bold text-2xl inline mr-5">
+                  <p className="py-3 md:w-[450px] w-full">
+                    <div className="flex flex-row  space-x[10px] md:space-x-[20px] ">
+                      <h className="font-bold sm md:text-xl lg:text-2xl inline mr-5">
                         Released:{" "}
                       </h>
-                      <h className="text-2xl font-thin inline">
+                      <h className="sm md:text-xl lg:text-2xl font-thin inline">
                         {soloAlbumDetail.released}
                       </h>
                     </div>
-                    <div className="flex flex-row space-x-[50px] ">
-                      <h className="font-bold text-2xl inline mr-5">Studio: </h>
-                      <h className="text-2xl font-thin inline">
+                    <div className="flex flex-row space-x[10px] md:space-x-[50px] m- ">
+                      <h className="font-bold sm md:text-xl lg:text-2xl inline mr-5">
+                        Studio:{" "}
+                      </h>
+                      <h className="sm md:text-xl lg:text-2xl font-thin inline ">
                         {soloAlbumDetail.studio}
                       </h>
                     </div>
-                    <div className="flex flex-row  space-x-[45px] ">
-                      <h className="font-bold text-2xl inline mr-5">Length: </h>
-                      <h className="text-2xl font-thin inline">
+                    <div className="flex flex-row  space-x[10px] md:space-x-[45px] ">
+                      <h className="font-bold sm md:text-xl lg:text-2xl inline mr-5">
+                        Length:{" "}
+                      </h>
+                      <h className="sm md:text-xl lg:text-2xl font-thin inline">
                         {soloAlbumDetail.length}
                       </h>
                     </div>
 
-                    <div className="flex flex-row  space-x-[63px] ">
-                      <h className="font-bold text-2xl inline mr-5">Label: </h>
-                      <h className="text-2xl font-thin inline">
+                    <div className="flex flex-row  space-x[10px] md:space-x-[63px] ">
+                      <h className="font-bold sm md:text-xl lg:text-2xl inline mr-5">
+                        Label:{" "}
+                      </h>
+                      <h className="sm md:text-xl lg:text-2xl font-thin inline">
                         {soloAlbumDetail.label}
                       </h>
                     </div>
@@ -262,15 +277,15 @@ const AlbumAbout = () => {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col h-[300px]">
-                <button className="text-2xl font-bold">Press</button>
+              <div className="hidden md:flex flex-row md:flex-col h-[300px]">
+                <button className=" text-2xl font-bold">Press</button>
                 <button
                   onClick={handlePressButton}
                   className="bg-[#2F2E2E]  h-[260px] w-16 flex flex-col  justify-center"
                 >
                   <img src={Image} alt="" className="bg-transparent w-1" />
 
-                  <span className="text-xl pl-4 writing-mode-vertical bg-transparent font-bold">
+                  <span className=" text-xl pl-4 writing-mode-vertical bg-transparent font-bold">
                     Leave Your Review
                   </span>
                 </button>
@@ -330,11 +345,13 @@ const AlbumAbout = () => {
                       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                     }
                     alt=""
-                    className="h-20 rounded-xl"
+                    className="h-16 md:h-20 rounded-xl"
                   />
 
                   <div className="px-3">
-                    <h1 className=" font-bold text-2xl ">{items.userName}</h1>
+                    <h1 className=" font-bold  text-base md:text-2xl ">
+                      {items.userName}
+                    </h1>
                     <div className="p-0">
                       {[...Array(5)].map((_, index) => {
                         const ratingValue = index + 1;

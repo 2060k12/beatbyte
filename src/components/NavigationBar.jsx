@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 
 const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for menu toggle
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -23,25 +24,27 @@ const NavigationBar = () => {
             BeatByte
           </span>
 
-          <span class="text-3xl cursor-pointer mx-2 md:hidden block">
-            <ion-icon
-              name="menu"
-              onClick={(e) => {
-                e.name === "menu"
-                  ? e.target.setAttribute("name", "close")
-                  : e.target.setAttribute("name", "menu");
-              }}
-            ></ion-icon>
+          {/* Toggle menu icon */}
+          <span
+            className="text-3xl cursor-pointer mx-2 md:hidden block"
+            onClick={() => setIsMenuOpen(!isMenuOpen)} // Toggle menu state
+          >
+            <ion-icon name={isMenuOpen ? "close" : "menu"}></ion-icon>
           </span>
         </div>
-        <ul className="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500 ">
+
+        {/* Navigation menu */}
+        <ul
+          className={`${
+            isMenuOpen ? "block" : "hidden" // Conditionally show/hide menu
+          } md:flex md:items-center md:ml-auto`}
+        >
           <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
             <Link to="/">Home</Link>
           </li>
           <li className="text-xl hover:text-[#09E85E]  duration-500 mx-4 my-6 md:my-0">
             <Link to="/browse">Browse</Link>
           </li>
-
           {!isLoggedIn ? (
             <li className="mx-4 text-2xl my-6 md:my-0">
               <Link to="/login" className="text-[#09E85E]">
@@ -49,13 +52,13 @@ const NavigationBar = () => {
               </Link>
             </li>
           ) : (
-            <div className=" dropdown dropdown-end">
+            <div className=" md:dropdown md:dropdown-end ">
               <div
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
+                <div className="md:w-10 w-fill  md:rounded-full ml-4">
                   <img
                     alt="image"
                     src={
@@ -71,7 +74,7 @@ const NavigationBar = () => {
                 // bg-base-70
               >
                 <li>
-                  <Link to="/profile" className="justify-between">
+                  <Link to="/profile" className="justify-between ">
                     Profile
                     <span className="badge">New</span>
                   </Link>

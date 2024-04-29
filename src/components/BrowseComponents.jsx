@@ -53,7 +53,6 @@ const Browse = () => {
           id: doc.id,
         }));
         setAlbumList(filteredData);
-        console.log(filteredData);
       } catch (error) {
         console.error(error);
       }
@@ -175,14 +174,14 @@ const Browse = () => {
           <div>
             {searchedItemsVisible && selected == "albums" && (
               <div ref={browseAlbumsSection}>
-                <h1 className="font-bold text-4xl px-5 lg:px-0">
+                <h1 className="font-bold  text-2xl md:text-4xl px-5 lg:px-0">
                   Browse all albums
                 </h1>
 
                 <div className="flex flex flex-wrap lg:justify-start justify-center lg:p-0">
                   {filteredAlbums.map((eachAlbum) => (
                     <div key={eachAlbum.id}>
-                      <div className=" m-2 ml-0 mr-10 max-w-36  ">
+                      <div className="m-2 ml-0 mr-10 max-w-[200px]  ">
                         <Link
                           to={`/album/${eachAlbum.id}`}
                           state={{ albumId: eachAlbum.id }}
@@ -190,10 +189,10 @@ const Browse = () => {
                           <img
                             src={eachAlbum.albumArt}
                             alt="Image "
-                            className="h-[200px] rounded-3xl block p-0 m-0"
+                            className="h-[50px] md:h-[250px] md:w-[250px] rounded-3xl block p-0 m-0 object-cover"
                           />
 
-                          <span className="text-lg pt-1 mt-2 center block text-center leading-7 ">
+                          <span className="text-[25px] pt-1 mt-2 center block text-center leading-8 font-light ">
                             {eachAlbum.name}
                           </span>
                         </Link>
@@ -227,11 +226,13 @@ const Browse = () => {
                       state={{ artistId: artist.id }}
                     >
                       <img
-                        className="w-40 h-40 rounded-full "
+                        className="w-40 h-40 rounded-full  object-cover"
                         src={artist.profileImage}
                         alt=""
                       />
-                      <h1 className="text-center w-full">{artist.name}</h1>
+                      <h1 className="text-[25px] pt-1 mt-2 center block text-center leading-8 font-light">
+                        {artist.name}
+                      </h1>
                     </Link>
                   </div>
                 ))}
